@@ -2,6 +2,18 @@
 
 AgriSphere is a full-stack climate-smart farming platform built with React, Vite, Tailwind CSS, shadcn-style UI components, Express, Prisma, PostgreSQL, Clerk, and third-party agriculture data APIs.
 
+The platform brings farm monitoring, crop intelligence, disease analysis, market awareness, and day-to-day farm management into one responsive workspace. It is designed to remain useful in demo mode, even when external API credentials are not configured.
+
+## Highlights
+
+- Climate and sensor monitoring with charts, gauges, and farm maps
+- Crop recommendations and crop disease detection workflows
+- Disease risk visualization and weather-aware guidance
+- Market price intelligence and profit heatmaps
+- Farm calendar, expense tracking, alerts, and settings
+- Community feed, knowledge hub, video resources, and AI agronomy chat
+- Demo-safe fallback data for local development without every integration enabled
+
 ## Stack
 
 - Frontend: React, Vite, Tailwind CSS, Chart.js, Mapbox GL JS, Clerk
@@ -41,12 +53,14 @@ AgriSphere is a full-stack climate-smart farming platform built with React, Vite
 
 ## Environment Variables
 
-Copy:
+Create local environment files from the provided examples:
 
-- `client/.env.example`
-- `server/.env.example`
+```bash
+copy client\.env.example client\.env
+copy server\.env.example server\.env
+```
 
-Then provide:
+Then provide the values required for the integrations you want to enable:
 
 - Clerk publishable and secret keys
 - Neon `DATABASE_URL`
@@ -56,6 +70,12 @@ Then provide:
 - Plant disease API URL and key
 - OpenAI API key and model
 - YouTube Data API key
+
+Keep `.env` files private. The example files intentionally contain placeholders only.
+
+## Architecture
+
+The React/Vite client communicates with the Express API under `/api`. The server coordinates authentication, Prisma persistence, fallback data, and external services. PostgreSQL can run locally or through Neon, while third-party integrations are isolated in backend services so the dashboard can continue rendering when an integration is unavailable.
 
 ## Development
 
@@ -80,8 +100,30 @@ npm run dev
 
 Frontend runs on `http://localhost:5173` and backend on `http://localhost:4000`.
 
+## Available Commands
+
+```bash
+# Frontend production build
+npm run build --workspace client
+
+# Backend syntax check
+npm run build --workspace server
+
+# Run the checks for both workspaces
+npm run lint
+```
+
 ## Notes
 
 - The backend includes demo fallbacks when API keys are missing, so the UI still renders with representative data.
 - Clerk is optional in local demo mode. Add `VITE_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` to enable real authentication.
 - The OpenAI chatbot endpoint is implemented with the Responses API shape and falls back to demo agronomy guidance when no key is configured.
+
+## Live Demo
+
+[Open the AgriSphere frontend](https://agri-sphere-client.vercel.app/)
+
+## Resources
+
+- [GitHub repository](https://github.com/vedant6262/AgriSphere)
+- [Repository activity](https://github.com/vedant6262/AgriSphere/activity)

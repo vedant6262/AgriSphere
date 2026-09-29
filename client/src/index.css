@@ -1,0 +1,215 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 138 76% 97%;
+  --foreground: 220 39% 11%;
+  --card: 0 0% 100%;
+  --card-foreground: 220 39% 11%;
+  --muted: 138 34% 94%;
+  --muted-foreground: 220 9% 46%;
+  --border: 135 24% 86%;
+  --primary: 142 76% 36%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 142 72% 29%;
+  --secondary-foreground: 0 0% 100%;
+  --accent: 142 71% 45%;
+  --accent-foreground: 0 0% 100%;
+}
+
+.dark {
+  --background: 222 47% 11%;
+  --foreground: 210 40% 96%;
+  --card: 221 44% 14%;
+  --card-foreground: 210 40% 96%;
+  --muted: 221 33% 20%;
+  --muted-foreground: 218 11% 65%;
+  --border: 219 31% 25%;
+  --primary: 142 71% 45%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 142 72% 29%;
+  --secondary-foreground: 0 0% 100%;
+  --accent: 142 71% 45%;
+  --accent-foreground: 0 0% 100%;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply min-h-screen bg-background font-sans text-foreground antialiased;
+    background-image:
+      radial-gradient(circle at 12% 0%, rgba(34, 197, 94, 0.16), transparent 32%),
+      radial-gradient(circle at 100% 100%, rgba(21, 128, 61, 0.1), transparent 36%),
+      linear-gradient(180deg, rgba(240, 253, 244, 0.72), rgba(240, 253, 244, 0));
+  }
+
+  #root {
+    @apply min-h-screen;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply border border-white/45 bg-white/75 shadow-glass backdrop-blur-xl dark:border-white/10 dark:bg-white/5;
+  }
+
+  .dashboard-section {
+    @apply rounded-3xl border border-border/70 bg-card/85 p-5 shadow-soft backdrop-blur-xl;
+  }
+
+  .saas-card {
+    @apply rounded-2xl border border-border/70 bg-card/80 p-5 shadow-soft backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:shadow-glass;
+  }
+
+  .soft-ring {
+    @apply ring-1 ring-black/5 dark:ring-white/10;
+  }
+
+  .page-title {
+    @apply font-display text-3xl font-semibold tracking-tight md:text-4xl;
+  }
+
+  .section-title {
+    @apply font-display text-xl font-semibold tracking-tight;
+  }
+
+  .card-label {
+    @apply text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground;
+  }
+
+  .dash-grid {
+    @apply grid gap-5 sm:gap-6;
+  }
+
+  .rbc-calendar {
+    @apply rounded-2xl border border-border/70 bg-background/70 p-3 text-sm;
+  }
+
+  .rbc-header {
+    @apply border-border/70 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground;
+  }
+
+  .rbc-month-view,
+  .rbc-time-view,
+  .rbc-agenda-view {
+    @apply overflow-hidden rounded-xl border-border/60;
+  }
+
+  .rbc-event {
+    @apply rounded-lg border-none bg-primary/90 px-2 py-1 text-xs shadow-sm;
+  }
+
+  .rbc-today {
+    @apply bg-primary/10;
+  }
+
+  .rbc-toolbar button {
+    @apply rounded-lg border-border/70 bg-background/80 text-foreground;
+  }
+
+  .rbc-off-range-bg {
+    @apply bg-muted/45;
+  }
+
+  .dark .rbc-toolbar button {
+    @apply bg-card/80;
+  }
+
+  .sensor-gauge-card {
+    background-image:
+      radial-gradient(circle at 95% 10%, rgba(255, 255, 255, 0.17), transparent 42%),
+      linear-gradient(150deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+  }
+
+  .sensor-gauge-track {
+    @apply h-3 overflow-hidden rounded-full bg-muted;
+  }
+
+  .sensor-gauge-fill {
+    width: var(--gauge-percent);
+    @apply h-full rounded-full transition-all duration-700 ease-out;
+  }
+
+  .monitor-chart-panel {
+    background-image:
+      radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.18), transparent 45%),
+      radial-gradient(circle at 0% 100%, rgba(16, 185, 129, 0.08), transparent 38%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0));
+  }
+
+  .sensor-live-indicator {
+    @apply inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-primary;
+    border: 1px solid hsl(var(--primary) / 0.35);
+    background-color: hsl(var(--primary) / 0.12);
+  }
+
+  .sensor-live-indicator::before {
+    content: "";
+    width: 0.42rem;
+    height: 0.42rem;
+    margin-right: 0.42rem;
+    border-radius: 9999px;
+    background: rgb(16 185 129);
+    box-shadow: 0 0 0 rgba(16, 185, 129, 0.45);
+    animation: pulse-dot 1.5s infinite;
+  }
+
+  .monitor-report-card {
+    background-image:
+      radial-gradient(circle at 85% 0%, rgba(16, 185, 129, 0.08), transparent 36%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+  }
+}
+
+@keyframes pulse-dot {
+  0% {
+    transform: scale(0.92);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.42);
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+  }
+
+  100% {
+    transform: scale(0.92);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+@media print {
+  body {
+    background: #fff !important;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  .print-report-area,
+  .print-report-area * {
+    visibility: visible;
+  }
+
+  .print-report-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    border: none !important;
+    box-shadow: none !important;
+    margin: 0;
+    padding: 12mm;
+  }
+}

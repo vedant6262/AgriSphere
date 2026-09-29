@@ -1,0 +1,129 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model FarmProfile {
+  id               String          @id @default(cuid())
+  clerkUserId      String          @unique
+  farmName         String?
+  location         String?
+  latitude         Float?
+  longitude        Float?
+  cropType         String?
+  region           String?
+  season           String?
+  tempLowThreshold Float?          @default(18)
+  tempHighThreshold Float?         @default(35)
+  sensorChannelId  String?
+  sensorFieldSoil  Int?            @default(1)
+  sensorFieldHum   Int?            @default(2)
+  sensorFieldTemp  Int?            @default(3)
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  expenses         ExpenseEntry[]
+  posts            CommunityPost[]
+  alerts           Alert[]
+  tasks            FarmTask[]
+  diseaseRiskAnalyses DiseaseRiskAnalysis[]
+}
+
+model DiseaseRiskAnalysis {
+  id               String      @id @default(cuid())
+  farmProfileId    String
+  sourceFileName   String
+  overallRisk      String
+  overallAffectedPercent Float
+  mostAffectedZone String
+  zonesJson        Json
+  createdAt        DateTime    @default(now())
+  farmProfile      FarmProfile @relation(fields: [farmProfileId], references: [id], onDelete: Cascade)
+
+  @@index([farmProfileId, createdAt])
+}
+
+model ExpenseEntry {
+  id            String          @id @default(cuid())
+  farmProfileId String
+  category      ExpenseCategory
+  amount        Float
+  month         Int
+  year          Int
+  notes         String?
+  createdAt     DateTime        @default(now())
+  farmProfile   FarmProfile     @relation(fields: [farmProfileId], references: [id], onDelete: Cascade)
+}
+
+model CommunityPost {
+  id            String             @id @default(cuid())
+  farmProfileId String
+  authorName    String
+  title         String
+  content       String
+  createdAt     DateTime           @default(now())
+  farmProfile   FarmProfile        @relation(fields: [farmProfileId], references: [id], onDelete: Cascade)
+  comments      CommunityComment[]
+}
+
+model CommunityComment {
+  id         String        @id @default(cuid())
+  postId     String
+  authorName String
+  content    String
+  createdAt  DateTime      @default(now())
+  post       CommunityPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+}
+
+model Alert {
+  id            String        @id @default(cuid())
+  farmProfileId String?
+  type          AlertType
+  severity      AlertSeverity
+  title         String
+  description   String
+  issuedAt      DateTime      @default(now())
+  acknowledged  Boolean       @default(false)
+  farmProfile   FarmProfile?  @relation(fields: [farmProfileId], references: [id], onDelete: Cascade)
+}
+
+model FarmTask {
+  id               String     @id @default(cuid())
+  farmProfileId    String
+  title            String
+  description      String?
+  scheduledAt      DateTime
+  remindBeforeHours Int       @default(24)
+  status           TaskStatus @default(PENDING)
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  farmProfile      FarmProfile @relation(fields: [farmProfileId], references: [id], onDelete: Cascade)
+}
+
+enum ExpenseCategory {
+  SEEDS
+  FERTILIZER
+  LABOR
+  EQUIPMENT
+}
+
+enum AlertType {
+  CLIMATE
+  PEST
+  WEATHER
+}
+
+enum AlertSeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum TaskStatus {
+  PENDING
+  COMPLETED
+}

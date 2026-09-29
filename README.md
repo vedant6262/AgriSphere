@@ -51,13 +51,27 @@ The platform brings farm monitoring, crop intelligence, disease analysis, market
 └── package.json
 ```
 
+## Prerequisites
+
+- Node.js 18 or newer
+- npm 9 or newer
+- PostgreSQL locally or a Neon PostgreSQL database
+- API credentials for any live integrations you want to enable
+
+The application can still be explored in demo mode without most external credentials.
+
 ## Environment Variables
 
 Create local environment files from the provided examples:
 
 ```bash
+# Windows
 copy client\.env.example client\.env
 copy server\.env.example server\.env
+
+# macOS/Linux
+cp client/.env.example client/.env
+cp server/.env.example server/.env
 ```
 
 Then provide the values required for the integrations you want to enable:
@@ -100,6 +114,8 @@ npm run dev
 
 Frontend runs on `http://localhost:5173` and backend on `http://localhost:4000`.
 
+Verify the backend is running at `http://localhost:4000/api/health`.
+
 ## Available Commands
 
 ```bash
@@ -127,3 +143,5 @@ npm run lint
 
 - [GitHub repository](https://github.com/vedant6262/AgriSphere)
 - [Repository activity](https://github.com/vedant6262/AgriSphere/activity)
+
+For frontend-specific routing and API usage, see [`client/README.md`](client/README.md). For backend routes, persistence, and integrations, see [`server/README.md`](server/README.md).

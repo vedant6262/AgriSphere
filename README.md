@@ -135,13 +135,3 @@ npm run lint
 - Clerk is optional in local demo mode. Add `VITE_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` to enable real authentication.
 - The OpenAI chatbot endpoint is implemented with the Responses API shape and falls back to demo agronomy guidance when no key is configured.
 
-## Live Demo
-
-[Open the AgriSphere frontend](https://agri-sphere-client.vercel.app/)
-
-## Resources
-
-- [GitHub repository](https://github.com/vedant6262/AgriSphere)
-- [Repository activity](https://github.com/vedant6262/AgriSphere/activity)
-
-For frontend-specific routing and API usage, see [`client/README.md`](client/README.md). For backend routes, persistence, and integrations, see [`server/README.md`](server/README.md).
